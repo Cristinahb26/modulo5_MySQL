@@ -26,7 +26,7 @@ async function main (){
 
             /* Obtén el número total de alumnos por asignatura, el nombre de la asignatura y el nombre y apellidos del profesor que la imparte */
 
-            // const sql = "SELECT subjects.title, teachers.first_name, teachers.last_name, COUNT(*) AS Total_Alumnos FROM subjects INNER JOIN subjects_teacher ON (subjects.subject_id = subjects_teacher.subject_id) INNER JOIN teachers ON (subjects_teacher.teacher_id = teachers.teacher_id) INNER JOIN marks ON (subjects.subject_id = marks.subject_id) INNER JOIN students ON (marks.student_id = students.student_id) GROUP BY subjects.title, teachers.first_name, teachers.last_name;"
+            // const sql = "SELECT subjects.title, teachers.first_name, teachers.last_name, COUNT(student_id) AS Total_Alumnos FROM subjects INNER JOIN subjects_teacher ON (subjects.subject_id = subjects_teacher.subject_id) INNER JOIN teachers ON (subjects_teacher.teacher_id = teachers.teacher_id) INNER JOIN students ON (subjects_teacher.grupo_id = students.student_id) GROUP BY subjects.title, teachers.first_name, teachers.last_name;"
 
 
             const [result , data] = await connection.execute(sql);
