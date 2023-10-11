@@ -3,7 +3,7 @@ const { pool } = require("../database");
 const getNota = async (req, res) =>
  { 
 
-    let sql = "SELECT AVG(note) FROM marks WHERE student_id = " + req.params.student_id; 
+    let sql = `SELECT AVG(note) FROM marks WHERE student_id = ${req.query.student_id};`
 
     try 
     {
@@ -22,7 +22,11 @@ const getNota = async (req, res) =>
 const getSubjectsAlum = async (req, res) =>{
 
     try{
-
+        let sql = "SELECT title AS lista_total FROM subjects INNER JOIN subjects_teacher ON (subjects.subject_id = subjects_teacher.subject_id) INNER JOIN grupo ON (subjects_teacher.subject_id = grupo.grupo_id) INNER JOIN students ON (grupo.grupo_id = students.student_id)"
+        console.log(sql);
+        
+        let [result] = await pool.query(sql);
+        res.send(result)
         
 
     }
@@ -53,7 +57,7 @@ const getSubjectsTeachers = async (req, res) => {
 
    try{
        
-    let sql = "SELECT title AS lista_total FROM subjects INNER JOIN subjects_teacher ON (subjects.subject_id = subjects_teacher.subject_id) INNER JOIN teachers ON (subjects_teacher.subjects_id = teachers.teacher_id)"
+    let sql = "SELECT title AS lista_total FROM subjects INNER JOIN subjects_teacher ON (subjects.subject_id = subjects_teacher.subject_id) INNER JOIN teachers ON (subjects_teacher.subject_id = teachers.teacher_id)"
     console.log(sql);
         
     let [result] = await pool.query(sql);
